@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../lib/google_maps_cluster_manager.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -29,7 +31,7 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  late ClusterManager _manager;
+  late ClusterManagerCustom _manager;
 
   Completer<GoogleMapController> _controller = Completer();
 
@@ -72,8 +74,8 @@ class MapSampleState extends State<MapSample> {
     super.initState();
   }
 
-  ClusterManager _initClusterManager() {
-    return ClusterManager<Place>(items, _updateMarkers,
+  ClusterManagerCustom _initClusterManager() {
+    return ClusterManagerCustom<Place>(items, _updateMarkers,
         markerBuilder: _markerBuilder);
   }
 
@@ -111,7 +113,7 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Future<Marker> Function(Cluster<Place>) get _markerBuilder =>
+  Future<Marker> Function(ClusterCustom<Place>) get _markerBuilder =>
       (cluster) async {
         return Marker(
           markerId: MarkerId(cluster.getId()),
